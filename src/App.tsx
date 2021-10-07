@@ -1,13 +1,7 @@
-import CharacterFiltersContainer from './components/filters/containers/CharacterFiltersContainer';
-import CharacterCardsContainer from './components/results/containers/CharacterCardsContainer';
+import HomePage from './pages/HomePage';
 
 function App() {
-  return (
-    <>
-      <CharacterFiltersContainer />
-      <CharacterCardsContainer />
-    </>
-  );
+  return <HomePage />;
 }
 
 export default App;

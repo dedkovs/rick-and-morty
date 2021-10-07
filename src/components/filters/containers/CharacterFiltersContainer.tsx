@@ -1,25 +1,24 @@
 import { ChangeEvent } from 'react';
 import CharacterInput from '../views/CharacterInput';
 import { useAppDispatch } from '../../../redux/hooks';
+import { inputChanged } from '../../../redux/slices/characters.slice';
 
 const CHARACTER_NAME_LABEL = 'Character name';
-const CHARACTER_NAME_DISPATCH_TYPE = 'CHARACTER_NAME_CHANGED';
 
-const CharacterFiltersContainer = () => {
+const CharacterFiltersContainer: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const onInputChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    dispatchType: string
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    dispatch({ type: dispatchType, payload: e.target.value });
+    dispatch(inputChanged(e.target.value));
   };
+
   return (
     <div>
       <CharacterInput
         onInputChange={onInputChange}
         label={CHARACTER_NAME_LABEL}
-        dispatchType={CHARACTER_NAME_DISPATCH_TYPE}
       />
     </div>
   );

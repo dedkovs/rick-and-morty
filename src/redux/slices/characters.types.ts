@@ -1,3 +1,5 @@
+// entities
+
 export type CHARACTER_NAME_CHANGED = 'CHARACTER_NAME_CHANGED';
 
 export interface InitialState {

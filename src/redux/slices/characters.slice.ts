@@ -7,9 +7,11 @@ export const initialState: InitialState = {
 };
 
 export const characters = createSlice({
+  //
   name: 'characters',
   initialState,
   reducers: {
+    inputChanged: (state, action) => state,
     setCharacterName: (state, action) => {
       state.characterName = action.payload;
     },
@@ -19,7 +21,7 @@ export const characters = createSlice({
   },
 });
 
-export const { setCharacterName, setFilteredCharactersFromApi } =
+export const { setCharacterName, setFilteredCharactersFromApi, inputChanged } =
   characters.actions;
 
 export default characters.reducer;

@@ -1,11 +1,14 @@
 import { Link, MemoryRouter, Route } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { PaginationComponentProps } from './PaginationComponent.types';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { setPageNumber } from '../../redux/slices/pagination.slice';
 
-const PaginationComponent = ({ count }: PaginationComponentProps) => {
+interface PaginationComponentProps {
+  count: number;
+}
+
+const PaginationComponent: React.FC<PaginationComponentProps> = ({ count }) => {
   const characterName = useAppSelector(
     (state) => state.characters.characterName
   );

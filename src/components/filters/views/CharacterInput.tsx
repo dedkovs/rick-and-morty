@@ -1,9 +1,13 @@
+import { ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { CharacterInputProps } from './CharacterInput.types';
+interface CharacterInputProps {
+  onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  label: string;
+}
 
-const CharacterInput = (props: CharacterInputProps) => {
-  const { onInputChange, label, dispatchType } = props;
+const CharacterInput: React.FC<CharacterInputProps> = (props) => {
+  const { onInputChange, label } = props;
 
   return (
     <Box
@@ -18,7 +22,7 @@ const CharacterInput = (props: CharacterInputProps) => {
         id={label}
         label={label}
         variant={'standard'}
-        onChange={(e) => onInputChange(e, dispatchType)}
+        onChange={onInputChange}
       />
     </Box>
   );

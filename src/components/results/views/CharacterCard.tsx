@@ -3,85 +3,101 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { CharacterCardProps } from './CharacterCard.types';
-import './characterCardImage.css';
+import { Character } from '../../../redux/slices/characters.types';
+
+interface CharacterCardProps {
+  character: Character;
+}
+
+interface CharacterStatusAndColor {
+  [status: string]: string;
+}
+
+const characterStatusAndColor: CharacterStatusAndColor = {
+  Alive: 'LimeGreen',
+  Dead: 'OrangeRed',
+  unknown: 'rgba(0,0,0,0.5)',
+};
+
+const cardStyle = {
+  minWidth: 275,
+  maxWidth: { xs: 340, sm: 380 },
+  margin: 2,
+  position: 'relative',
+  borderRadius: 2,
+  boxShadow: '0 5px 10px rgba(0,0,0,0.2)',
+} as const;
+
+const cardContentStyle = {
+  display: 'flex',
+  padding: { xs: 1, sm: 1.5 },
+  ':last-child': { paddingBottom: 1 },
+};
+
+const characterCardImageStyle = {
+  width: { xs: 100, sm: 150 },
+  height: '100%',
+  borderRadius: 1,
+  marginRight: 1.5,
+  marginBottom: 1,
+};
+
+const greyText = {
+  display: 'inline',
+  color: 'rgba(0,0,0,0.5)',
+};
+
+const cardActionsStyle = {
+  alignItems: 'baseline',
+  padding: 0,
+  marginTop: 2,
+};
+
+const buttonStyle = {
+  padding: 0,
+  ':hover': { backgroundColor: 'transparent' },
+};
 
 const CharacterCard = (props: CharacterCardProps) => {
-  const {
-    // created,
-    // episode,
-    gender,
-    // id,
-    image,
-    // location,
-    name,
-    // origin,
-    species,
-    status,
-    type,
-    // url,
-  } = props.character;
+  const { gender, image, name, species, status, type } = props.character;
 
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+  const characterStatusStyle = {
+    display: 'inline',
+    color: characterStatusAndColor[status],
+  };
 
   return (
-    <Card
-      variant="outlined"
-      sx={{
-        minWidth: 275,
-        maxWidth: 400,
-        margin: 2,
-        position: 'relative',
-        borderRadius: 2,
-      }}
-    >
-      <CardContent
-        className="characterCardCardContent"
-        style={{ paddingBottom: 0 }}
-      >
+    <Card sx={cardStyle}>
+      <CardContent sx={cardContentStyle}>
+        <Box
+          component="img"
+          sx={characterCardImageStyle}
+          alt={name}
+          src={image}
+        />
         <Box>
-          <img className="characterCardImage" src={image} alt={`${name}`} />
-        </Box>
-        <Box>
-          <Typography variant="h5" component="div">
-            {name}
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          <Box sx={{ typography: 'h5' }}>{name}</Box>
+          <Box sx={{ mb: 1.5 }} color="text.secondary">
             {type}
-          </Typography>
-          <Typography variant="body2">
-            <span className="characterCardTextGrey">species: </span>
-            {species}
-            <br />
-            <span className="characterCardTextGrey">gender: </span>
-            {gender}
-            <br />
-            <span className="characterCardTextGrey">status: </span>
-            <span
-              className={
-                status === 'Alive'
-                  ? 'characterCardTextGreen'
-                  : status === 'Dead'
-                  ? 'characterCardTextRed'
-                  : 'characterCardTextGrey'
-              }
-            >
-              {status}
-            </span>
-          </Typography>
-          <CardActions
-            sx={{
-              padding: 0,
-              marginLeft: -0.6,
-              marginTop: 2,
-              marginBottom: matches ? 2 : 1,
-            }}
-          >
-            <Button size="small">Learn More</Button>
+          </Box>
+          <Box sx={{ typography: 'body2' }}>
+            <Box>
+              <Box sx={greyText}>species: </Box>
+              {species}
+            </Box>
+            <Box>
+              <Box sx={greyText}>gender: </Box>
+              {gender}
+            </Box>
+            <Box>
+              <Box sx={greyText}>status: </Box>
+              <Box sx={characterStatusStyle}>{status}</Box>
+            </Box>
+          </Box>
+          <CardActions sx={cardActionsStyle}>
+            <Button sx={buttonStyle} size="small">
+              Learn More
+            </Button>
           </CardActions>
         </Box>
       </CardContent>
