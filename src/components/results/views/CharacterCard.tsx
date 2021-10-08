@@ -3,20 +3,19 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import { Character } from '../../../redux/slices/characters.types';
+import {
+  Character,
+  characterStatuses,
+} from '../../../redux/slices/characters.types';
 
-interface CharacterCardProps {
-  character: Character;
-}
-
-interface CharacterStatusAndColor {
-  [status: string]: string;
-}
+type CharacterStatusAndColor = {
+  [key in characterStatuses]: string;
+};
 
 const characterStatusAndColor: CharacterStatusAndColor = {
-  Alive: 'LimeGreen',
-  Dead: 'OrangeRed',
-  unknown: 'rgba(0,0,0,0.5)',
+  [characterStatuses.Alive]: 'LimeGreen',
+  [characterStatuses.Dead]: 'OrangeRed',
+  [characterStatuses.unknown]: 'rgba(0,0,0,0.5)',
 };
 
 const cardStyle = {
@@ -58,8 +57,8 @@ const buttonStyle = {
   ':hover': { backgroundColor: 'transparent' },
 };
 
-const CharacterCard = (props: CharacterCardProps) => {
-  const { gender, image, name, species, status, type } = props.character;
+const CharacterCard: React.FC<Character> = (props) => {
+  const { gender, image, name, species, status, type } = props;
 
   const characterStatusStyle = {
     display: 'inline',
