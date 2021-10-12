@@ -1,12 +1,13 @@
 import { FC, useEffect } from 'react';
 import HomePage from './pages/home/HomePage';
-import { getFilteredResultsTrigger } from './redux/slices/charactersSlice';
+import { getDataTrigger } from './redux/slices/charactersSlice';
 import { useAppDispatch } from './redux/hooks';
 import Box from '@mui/material/Box';
 
 const appStyle = {
   display: 'block',
   padding: 2,
+  paddingBottom: 4,
 } as const;
 
 const App: FC = () => {
@@ -17,7 +18,7 @@ const App: FC = () => {
     if (loading) {
       loading.parentNode?.removeChild(loading);
     }
-    dispatch(getFilteredResultsTrigger({}));
+    dispatch(getDataTrigger({}));
   }, [dispatch]);
 
   return (

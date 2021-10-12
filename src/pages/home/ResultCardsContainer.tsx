@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import CharacterCard from '../../components/home/CharacterCard';
 import { useAppSelector } from '../../redux/hooks';
 import { Character } from '../../entities/charactersTypes';
+import CharacterCardSkeletonsContainer from './CharacterCardSkeletonsContainer';
 
 const characterCardsContainerStyle = {
   display: 'flex',
@@ -12,17 +13,18 @@ const characterCardsContainerStyle = {
 } as const;
 
 const CharacterCardsContainer: FC = () => {
-  const filteredCharactersFromApi = useAppSelector(
-    (state) => state.characters.filteredCharactersFromApi
-  );
+  const data = useAppSelector((state) => state.characters.data);
+  const isLoading = useAppSelector((state) => state.characters.isLoading);
 
-  return filteredCharactersFromApi.length > 0 ? (
+  return isLoading ? (
+    <CharacterCardSkeletonsContainer />
+  ) : (
     <Box sx={characterCardsContainerStyle}>
-      {filteredCharactersFromApi.map((character: Character) => (
+      {data.map((character: Character) => (
         <CharacterCard key={character.id} {...character} />
       ))}
     </Box>
-  ) : null;
+  );
 };
 
 export default CharacterCardsContainer;

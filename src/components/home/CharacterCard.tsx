@@ -1,20 +1,21 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import { Character, characterStatuses } from '../../entities/charactersTypes';
+import { Character, CharacterStatuses } from '../../entities/charactersTypes';
+import Skeleton from '@mui/material/Skeleton';
 
 type CharacterStatusAndColor = {
-  [key in characterStatuses]: string;
+  [key in CharacterStatuses]: string;
 };
 
 const characterStatusAndColor: CharacterStatusAndColor = {
-  [characterStatuses.All]: '',
-  [characterStatuses.Alive]: 'LimeGreen',
-  [characterStatuses.Dead]: 'OrangeRed',
-  [characterStatuses.unknown]: 'rgba(0,0,0,0.5)',
+  [CharacterStatuses.All]: 'initial',
+  [CharacterStatuses.Alive]: 'LimeGreen',
+  [CharacterStatuses.Dead]: 'OrangeRed',
+  [CharacterStatuses.Unknown]: 'rgba(0,0,0,0.5)',
 };
 
 const cardStyle = {
@@ -42,7 +43,17 @@ const characterCardImageStyle = {
   borderRadius: 1,
   marginRight: 1.5,
   marginBottom: 1,
-};
+  position: 'relative',
+} as const;
+
+const imageSkeletonStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: { xs: 100, sm: 150 },
+  height: { xs: 100, sm: 150 },
+  borderRadius: 1,
+} as const;
 
 const greyText = {
   display: 'inline',
@@ -66,22 +77,36 @@ const learnMoreButtonStyle = {
 };
 
 const CharacterCard: FC<Character> = (props) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const { gender, image, name, species, status, type } = props;
 
   const characterStatusStyle = {
     display: 'inline',
     color: characterStatusAndColor[status],
-  };
+    textTransform: 'capitalize',
+  } as const;
 
   return (
     <Card sx={cardStyle}>
       <CardContent sx={cardContentStyle}>
-        <Box
-          component="img"
-          sx={characterCardImageStyle}
-          alt={name}
-          src={image}
-        />
+        <Box sx={{ position: 'relative' }}>
+          {imageLoaded ? null : (
+            <Skeleton
+              sx={imageSkeletonStyle}
+              animation="wave"
+              variant="rectangular"
+            />
+          )}
+          <Box
+            component="img"
+            sx={characterCardImageStyle}
+            alt={name}
+            src={image}
+            onLoad={() => setImageLoaded(true)}
+          />
+        </Box>
+
         <Box sx={containerForPositioningLearnMoreButtonToBottom}>
           <Box>
             <Box sx={characterNameStyle}>{name}</Box>

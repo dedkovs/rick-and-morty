@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { FC, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
 import Pagination from '../../components/home/Pagination';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { getFilteredResultsTrigger } from '../../redux/slices/charactersSlice';
+import { getDataTrigger } from '../../redux/slices/charactersSlice';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -16,27 +16,19 @@ const PaginationContainer: FC = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const filteredCharactersFromApi = useAppSelector(
-    (state) => state.characters.filteredCharactersFromApi
-  );
+  const data = useAppSelector((state) => state.characters.data);
 
-  const pageNumber = useAppSelector(
-    (state) => state.characters.pagination.pageNumber
-  );
+  const currentPage = useAppSelector((state) => state.characters.filters.page);
 
   const dispatch = useAppDispatch();
 
-  const handleChange = (e: React.ChangeEvent<unknown>, page: number) => {
-    if (pageNumber !== page) {
-      dispatch(
-        getFilteredResultsTrigger({
-          pageNumber: page,
-        })
-      );
+  const handleChange = (e: ChangeEvent<unknown>, page: number) => {
+    if (currentPage !== page) {
+      dispatch(getDataTrigger({ page }));
     }
   };
 
-  return filteredCharactersFromApi.length > 0 ? (
+  return data.length > 0 ? (
     <Box sx={PaginationContainerStyle}>
       <Pagination handleChange={handleChange} siblingCount={matches ? 1 : 0} />
     </Box>

@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
-import { watchGetFilteredResults } from './watchGetFilteredResults';
+import { watchGetData } from './watchGetData';
 
 export function* rootSaga() {
-  yield all([watchGetFilteredResults()]);
+  yield all([watchGetData()]);
 }

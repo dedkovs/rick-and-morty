@@ -1,9 +1,9 @@
 import { FC, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
-import CharacterInput from '../../components/home/CharacterInput';
+import CharacterNameInput from '../../components/home/CharacterNameInput';
 import { useAppDispatch } from '../../redux/hooks';
-import { getFilteredResultsTrigger } from '../../redux/slices/charactersSlice';
-import StatusSelectContainer from './StatusSelectContainer';
+import { getDataTrigger } from '../../redux/slices/charactersSlice';
+import CharacterStatusSelectContainer from './CharacterStatusSelectContainer';
 
 const characterFiltersContainerStyle = {
   display: 'flex',
@@ -32,13 +32,12 @@ const CharacterFiltersContainer: FC = () => {
   let previousName = '';
 
   const onCharacterNameInputChange = debounce((e) => {
-    const trimmedName = e.target.value.trim();
+    const trimmedName = e.target.value.trim().toLowerCase();
     const currentName = trimmedName;
     if (previousName !== currentName) {
       dispatch(
-        getFilteredResultsTrigger({
-          pageNumber: 1,
-          characterName: trimmedName,
+        getDataTrigger({
+          name: trimmedName,
         })
       );
       previousName = currentName;
@@ -47,11 +46,11 @@ const CharacterFiltersContainer: FC = () => {
 
   return (
     <Box sx={characterFiltersContainerStyle}>
-      <CharacterInput
+      <CharacterNameInput
         onCharacterNameInputChange={onCharacterNameInputChange}
         label="Character name"
       />
-      <StatusSelectContainer />
+      <CharacterStatusSelectContainer />
     </Box>
   );
 };

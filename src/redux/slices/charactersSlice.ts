@@ -1,21 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   CharactersState,
-  GetFilteredResultsTriggerActionPayload,
-  GetFilteredResultsSuccessActionPayload,
-  characterStatuses,
+  GetDataTriggerPayload,
+  ApiResponse,
+  CharacterStatuses,
 } from '../../entities/charactersTypes';
 
 export const initialState: CharactersState = {
   filters: {
     name: '',
-    status: characterStatuses.All,
+    status: CharacterStatuses.All,
+    page: 1,
   },
-  filteredCharactersFromApi: [],
   pagination: {
     pagesCount: 0,
-    pageNumber: 1,
   },
+  data: [],
   isLoading: false,
   error: null,
 };
@@ -24,59 +24,30 @@ export const characters = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    getFilteredResultsTrigger: (
-      state,
-      action: { type: string; payload: GetFilteredResultsTriggerActionPayload }
-    ) => {
+    getDataTrigger: (state, action: PayloadAction<GetDataTriggerPayload>) => {
       state.isLoading = true;
       state.error = null;
-      if (action.payload.characterName !== undefined) {
-        state.filters.name = action.payload.characterName;
-      }
-      if (action.payload.status !== undefined) {
-        state.filters.status = action.payload.status as characterStatuses;
-      }
+      state.filters = { ...state.filters, page: 1, ...action.payload };
     },
 
-    getFilteredResultsSuccess: (
-      state,
-      action: { type: string; payload: GetFilteredResultsSuccessActionPayload }
-    ) => {
+    getDataSuccess: (state, action: PayloadAction<ApiResponse>) => {
       state.isLoading = false;
       state.error = null;
-      state.filteredCharactersFromApi = action.payload.results;
+      state.data = action.payload.results;
       state.pagination.pagesCount = action.payload.info.pages;
-      state.pagination.pageNumber = action.payload.pageNumber;
     },
 
-    getFilteredResultsFailure: (state, action) => {
+    getDataFailure: (state, action: PayloadAction<Error>) => {
       state.isLoading = false;
-      state.error = 'Nothing was found';
-      state.filteredCharactersFromApi = [];
+      state.error = action.payload.message;
+      state.data = [];
       state.pagination.pagesCount = 0;
-      state.pagination.pageNumber = 1;
-    },
-
-    setFilteredCharactersFromApi: (state, action) => {
-      state.filteredCharactersFromApi = action.payload;
-    },
-
-    setPagesCount: (state, action) => {
-      state.pagination.pagesCount = action.payload;
-    },
-    setCharacterStatus: (state, action) => {
-      state.filters.status = action.payload;
+      state.filters.page = 1;
     },
   },
 });
 
-export const {
-  getFilteredResultsTrigger,
-  getFilteredResultsSuccess,
-  getFilteredResultsFailure,
-  setFilteredCharactersFromApi,
-  setPagesCount,
-  setCharacterStatus,
-} = characters.actions;
+export const { getDataTrigger, getDataSuccess, getDataFailure } =
+  characters.actions;
 
 export default characters.reducer;

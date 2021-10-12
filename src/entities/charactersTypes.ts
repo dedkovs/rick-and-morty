@@ -8,35 +8,38 @@ export interface Character {
   name: string;
   origin: CharacterOrigin;
   species: string;
-  status: characterStatuses;
+  status: CharacterStatuses;
   type: string;
   url: string;
 }
 
-export type CharacterStatus = keyof typeof characterStatuses | 'All';
+export interface Filters {
+  name: string;
+  status: CharacterStatuses;
+  page: number;
+}
+
+export interface Pagination {
+  pagesCount: number;
+}
+
+export interface ApiResponse {
+  info: CharacterInfo;
+  results: Character[];
+}
 
 export interface CharactersState {
-  filters: {
-    name: string;
-    status: characterStatuses;
-  };
-
-  filteredCharactersFromApi: Character[];
+  filters: Filters;
   pagination: Pagination;
+  data: Character[];
   isLoading: boolean;
   error: string | null;
 }
 
-export interface GetFilteredResultsTriggerActionPayload {
-  pageNumber?: number;
-  characterName?: string;
-  status?: characterStatuses;
-}
-
-export interface GetFilteredResultsSuccessActionPayload {
-  info: CharacterInfo;
-  results: Character[];
-  pageNumber: number;
+export interface GetDataTriggerPayload {
+  page?: number;
+  name?: string;
+  status?: CharacterStatuses;
 }
 
 export interface CharacterLocation {
@@ -55,19 +58,10 @@ export interface CharacterInfo {
   pages: number;
   prev: string | null;
 }
-export enum characterStatuses {
-  All = 'All',
+
+export enum CharacterStatuses {
+  All = '',
   Alive = 'Alive',
   Dead = 'Dead',
-  unknown = 'unknown',
-}
-
-export interface CharactersResponseFromApi {
-  info: CharacterInfo;
-  results: Character[];
-}
-
-export interface Pagination {
-  pagesCount: number;
-  pageNumber: number;
+  Unknown = 'unknown',
 }

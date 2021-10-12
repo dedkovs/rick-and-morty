@@ -15,9 +15,7 @@ const Pagination: FC<PaginationProps> = (props) => {
     (state) => state.characters.pagination.pagesCount
   );
 
-  const pageNumber = useAppSelector(
-    (state) => state.characters.pagination.pageNumber
-  );
+  const page = useAppSelector((state) => state.characters.filters.page);
 
   return (
     <MuiPagination
@@ -36,7 +34,7 @@ const Pagination: FC<PaginationProps> = (props) => {
         );
       }}
       siblingCount={siblingCount}
-      page={pageNumber}
+      page={page}
     />
   );
 };

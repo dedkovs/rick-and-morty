@@ -2,7 +2,7 @@ import { FC, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-interface CharacterInputProps {
+interface CharacterNameInputProps {
   onCharacterNameInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
 }
@@ -11,7 +11,7 @@ const inputStyle = {
   '& > :not(style)': { width: '25ch' },
 };
 
-const CharacterInput: FC<CharacterInputProps> = (props) => {
+const CharacterNameInput: FC<CharacterNameInputProps> = (props) => {
   const { onCharacterNameInputChange, label } = props;
 
   return (
@@ -26,4 +26,4 @@ const CharacterInput: FC<CharacterInputProps> = (props) => {
   );
 };
 
-export default CharacterInput;
+export default CharacterNameInput;

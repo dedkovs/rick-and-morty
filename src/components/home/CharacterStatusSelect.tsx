@@ -2,14 +2,16 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { characterStatuses } from '../../entities/charactersTypes';
+import { CharacterStatuses } from '../../entities/charactersTypes';
 import { useAppSelector } from '../../redux/hooks';
 
-interface StatusSelectProps {
+interface CharacterStatusSelectProps {
   onChange: (e: SelectChangeEvent) => void;
 }
 
-const StatusSelect: React.FC<StatusSelectProps> = ({ onChange }) => {
+const CharacterStatusSelect: React.FC<CharacterStatusSelectProps> = ({
+  onChange,
+}) => {
   const characterStatus = useAppSelector(
     (state) => state.characters.filters.status
   );
@@ -17,16 +19,17 @@ const StatusSelect: React.FC<StatusSelectProps> = ({ onChange }) => {
   return (
     <div>
       <FormControl variant="standard" sx={{ m: 1, minWidth: '25ch' }}>
-        <InputLabel>Character status</InputLabel>
+        <InputLabel shrink>Character status</InputLabel>
         <Select
+          displayEmpty
           value={characterStatus}
           onChange={onChange}
           label="Character status"
         >
-          {Object.keys(characterStatuses).map((status) => {
+          {Object.entries(CharacterStatuses).map(([key, value]) => {
             return (
-              <MenuItem key={status} value={(characterStatuses as any)[status]}>
-                {status}
+              <MenuItem key={key} value={value}>
+                {key}
               </MenuItem>
             );
           })}
@@ -36,4 +39,4 @@ const StatusSelect: React.FC<StatusSelectProps> = ({ onChange }) => {
   );
 };
 
-export default StatusSelect;
+export default CharacterStatusSelect;
