@@ -1,7 +1,7 @@
 import { FC, ChangeEvent } from 'react';
 import Box from '@mui/material/Box';
 import CharacterNameInput from '../../components/home/CharacterNameInput';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getDataTrigger } from '../../redux/slices/charactersSlice';
 import CharacterStatusSelectContainer from './CharacterStatusSelectContainer';
 
@@ -29,18 +29,16 @@ const debounce = (
 const CharacterFiltersContainer: FC = () => {
   const dispatch = useAppDispatch();
 
-  let previousName = '';
+  const name = useAppSelector((state) => state.characters.filters.name);
 
   const onCharacterNameInputChange = debounce((e) => {
     const trimmedName = e.target.value.trim().toLowerCase();
-    const currentName = trimmedName;
-    if (previousName !== currentName) {
+    if (name !== trimmedName) {
       dispatch(
         getDataTrigger({
           name: trimmedName,
         })
       );
-      previousName = currentName;
     }
   });
 

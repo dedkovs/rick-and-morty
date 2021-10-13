@@ -13,7 +13,7 @@ const CharacterStatusSelect: React.FC<CharacterStatusSelectProps> = ({
   onChange,
 }) => {
   const characterStatus = useAppSelector(
-    (state) => state.characters.filters.status
+    (state) => state.characters.filters.status //
   );
 
   return (

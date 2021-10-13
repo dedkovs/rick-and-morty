@@ -8,6 +8,11 @@ const appStyle = {
   display: 'block',
   padding: 2,
   paddingBottom: 4,
+
+  marginLeft: 'calc(100vw - 100%)',
+
+  // width: '100vw',
+  // overflowX: 'hidden',
 } as const;
 
 const App: FC = () => {
@@ -18,7 +23,7 @@ const App: FC = () => {
     if (loading) {
       loading.parentNode?.removeChild(loading);
     }
-    dispatch(getDataTrigger({}));
+    dispatch(getDataTrigger());
   }, [dispatch]);
 
   return (

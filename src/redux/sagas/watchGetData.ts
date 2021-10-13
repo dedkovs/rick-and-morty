@@ -4,9 +4,9 @@ import {
   getDataSuccess,
   getDataFailure,
 } from '../slices/charactersSlice';
-import { fetchApi } from '../helpers/api';
+import { fetchApi } from '../../pages/home/api';
 import { ApiResponse } from '../../entities/charactersTypes';
-import { getQueryUrl } from '../helpers/getQueryUrl';
+import { getQueryUrl } from '../../helpers/getQueryUrl';
 
 function* getDataAsync(): Generator {
   const filters = yield select((state) => state.characters.filters);

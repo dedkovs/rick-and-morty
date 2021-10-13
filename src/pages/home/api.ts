@@ -11,7 +11,6 @@ export const fetchApi = async (queryUrl: string) => {
   } catch (err) {
     if (axios.isAxiosError(err)) {
       const serverError = err as AxiosError<ServerError>;
-      console.log(serverError);
       if (serverError && serverError.response) {
         throw Error(serverError.response.data.error);
       }

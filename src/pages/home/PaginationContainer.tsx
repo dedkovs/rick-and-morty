@@ -28,7 +28,8 @@ const PaginationContainer: FC = () => {
     }
   };
 
-  return data.length > 0 ? (
+  return data.length > 0 ? ( //
+    // if data.length === 0 ...
     <Box sx={PaginationContainerStyle}>
       <Pagination handleChange={handleChange} siblingCount={matches ? 1 : 0} />
     </Box>

@@ -42,6 +42,8 @@ export interface GetDataTriggerPayload {
   status?: CharacterStatuses;
 }
 
+export type X = GetDataTriggerPayload | undefined;
+
 export interface CharacterLocation {
   name: string;
   url: string;
