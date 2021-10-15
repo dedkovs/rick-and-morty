@@ -7,12 +7,8 @@ import Box from '@mui/material/Box';
 const appStyle = {
   display: 'block',
   padding: 2,
-  paddingBottom: 4,
-
+  paddingBottom: 3,
   marginLeft: 'calc(100vw - 100%)',
-
-  // width: '100vw',
-  // overflowX: 'hidden',
 } as const;
 
 const App: FC = () => {

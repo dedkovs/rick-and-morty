@@ -18,14 +18,14 @@ const cardContentStyle = {
   ':last-child': { paddingBottom: { xs: 1.5, sm: 2.5 } },
   padding: { xs: 1, sm: 1.5 },
   height: '100%',
-};
+} as const;
 
 const characterCardImageStyle = {
   width: { xs: 100, sm: 150 },
   height: { xs: 100, sm: 150 },
   borderRadius: 1,
   marginRight: 1.5,
-};
+} as const;
 
 const containerForPositioningLearnMoreButtonToBottom = {
   display: 'flex',
@@ -40,7 +40,7 @@ const titleStyle = {
   borderRadius: { xs: 1, sm: 1.5 },
   transform: 'initial',
   height: { xs: '1.3rem', sm: '1.5rem' },
-};
+} as const;
 
 const infoStyle = {
   height: { xs: '0.8rem', sm: '0.8rem' },
@@ -48,7 +48,7 @@ const infoStyle = {
   transformOrigin: '0 0',
   borderRadius: { xs: 0.5, sm: 1 },
   transform: 'initial',
-};
+} as const;
 
 const buttonStyle = {
   transformOrigin: '0 0',
@@ -56,7 +56,7 @@ const buttonStyle = {
   transform: 'initial',
   height: { xs: '1.3rem', sm: '1.5rem' },
   width: '60%',
-};
+} as const;
 
 const CharacterCardSkeleton: FC = () => {
   return (

@@ -9,8 +9,8 @@ const HomePage: FC = () => {
     <>
       <CharacterFiltersContainer />
       <ErrorMessage />
-      <PaginationContainer />
       <ResultCardsContainer />
+      <PaginationContainer />
     </>
   );
 };

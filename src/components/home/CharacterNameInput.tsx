@@ -10,7 +10,7 @@ interface CharacterNameInputProps {
 
 const inputStyle = {
   '& > :not(style)': { width: '25ch' },
-};
+} as const;
 
 const CharacterNameInput: FC<CharacterNameInputProps> = (props) => {
   const { onCharacterNameInputChange, label } = props;

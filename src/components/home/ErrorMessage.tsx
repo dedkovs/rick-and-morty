@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { useAppSelector } from '../../redux/hooks';
 
 const ErrorMessageStyle = {
-  mt: 2,
+  marginTop: 2,
   fontStyle: 'italic',
   color: 'rgba(0,0,0,0.5)',
   textAlign: 'center',

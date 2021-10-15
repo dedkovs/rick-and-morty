@@ -30,12 +30,13 @@ const cardContentStyle = {
   padding: { xs: 1, sm: 1.5 },
   ':last-child': { paddingBottom: { xs: 1, sm: 2 } },
   height: '100%',
-};
+} as const;
 
 const characterNameStyle = {
   typography: 'h5',
   fontSize: { xs: '1.3rem', sm: '1.5rem' },
-};
+  wordBreak: 'break-word',
+} as const;
 
 const characterCardImageStyle = {
   width: { xs: 100, sm: 150 },
@@ -58,14 +59,14 @@ const imageSkeletonStyle = {
 const greyText = {
   display: 'inline',
   color: 'rgba(0,0,0,0.5)',
-};
+} as const;
 
 const cardActionsStyle = {
   padding: 0,
   marginTop: 2,
 } as const;
 
-const containerForPositioningLearnMoreButtonToBottom = {
+const textWithButtonContainer = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
@@ -74,7 +75,7 @@ const containerForPositioningLearnMoreButtonToBottom = {
 const learnMoreButtonStyle = {
   padding: 0,
   ':hover': { backgroundColor: 'transparent' },
-};
+} as const;
 
 const CharacterCard: FC<Character> = (props) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -107,7 +108,7 @@ const CharacterCard: FC<Character> = (props) => {
           />
         </Box>
 
-        <Box sx={containerForPositioningLearnMoreButtonToBottom}>
+        <Box sx={textWithButtonContainer}>
           <Box>
             <Box sx={characterNameStyle}>{name}</Box>
             <Box sx={{ mb: 1.5 }} color="text.secondary">

@@ -9,7 +9,8 @@ const characterCardsContainerStyle = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  gap: '32px',
+  gap: 4,
+  marginTop: 5,
 } as const;
 
 const CharacterCardsContainer: FC = () => {

@@ -9,8 +9,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 const PaginationContainerStyle = {
   display: 'block',
   width: 'fit-content',
-  margin: '24px auto',
-};
+  margin: '0 auto',
+  marginTop: 4,
+} as const;
 
 const PaginationContainer: FC = () => {
   const theme = useTheme();
@@ -25,6 +26,11 @@ const PaginationContainer: FC = () => {
   const handleChange = (e: ChangeEvent<unknown>, page: number) => {
     if (currentPage !== page) {
       dispatch(getDataTrigger({ page }));
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
     }
   };
 

@@ -13,7 +13,7 @@ const characterCardSkeletonsContainerStyle = {
 const CharacterCardSkeletonsContainer: FC = () => {
   return (
     <Box sx={characterCardSkeletonsContainerStyle}>
-      {new Array(10).fill('').map((el, index) => (
+      {[...Array(10)].map((el, index) => (
         <CharacterCardSkeleton key={index} />
       ))}
     </Box>

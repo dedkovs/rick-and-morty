@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   CharactersState,
-  GetDataTriggerPayload,
   ApiResponse,
   CharacterStatuses,
-  X,
+  GetDataTriggerPayloadOrUndefined,
 } from '../../entities/charactersTypes';
 
 export const initialState: CharactersState = {
@@ -25,7 +24,10 @@ export const characters = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    getDataTrigger: (state, action: PayloadAction<X>) => {
+    getDataTrigger: (
+      state,
+      action: PayloadAction<GetDataTriggerPayloadOrUndefined>
+    ) => {
       state.isLoading = true;
       state.error = null;
       state.filters = { ...state.filters, page: 1, ...action.payload };

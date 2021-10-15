@@ -42,7 +42,9 @@ export interface GetDataTriggerPayload {
   status?: CharacterStatuses;
 }
 
-export type X = GetDataTriggerPayload | undefined;
+export type GetDataTriggerPayloadOrUndefined =  // results?
+  | GetDataTriggerPayload
+  | undefined;
 
 export interface CharacterLocation {
   name: string;
