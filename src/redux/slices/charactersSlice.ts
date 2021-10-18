@@ -2,49 +2,55 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   CharactersState,
   ApiResponse,
-  CharacterStatuses,
-  GetDataTriggerPayloadOrUndefined,
+  CharacterStatus,
+  FiltersPayload,
+  CharacterSpecies,
+  CharacterGender,
 } from '../../entities/charactersTypes';
 
 export const initialState: CharactersState = {
   filters: {
     name: '',
-    status: CharacterStatuses.All,
+    type: '',
+    species: CharacterSpecies.All,
+    gender: CharacterGender.All,
+    status: CharacterStatus.All,
     page: 1,
   },
-  pagination: {
+  data: {
+    totalResultsCount: 0,
+    results: [],
     pagesCount: 0,
   },
-  data: [],
   isLoading: false,
-  error: null,
+  error: '',
 };
 
 export const characters = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    getDataTrigger: (
-      state,
-      action: PayloadAction<GetDataTriggerPayloadOrUndefined>
-    ) => {
+    getDataTrigger: (state, action: PayloadAction<FiltersPayload>) => {
       state.isLoading = true;
-      state.error = null;
+      state.data.totalResultsCount = 0;
+      state.error = '';
       state.filters = { ...state.filters, page: 1, ...action.payload };
     },
 
     getDataSuccess: (state, action: PayloadAction<ApiResponse>) => {
       state.isLoading = false;
-      state.error = null;
-      state.data = action.payload.results;
-      state.pagination.pagesCount = action.payload.info.pages;
+      state.data.totalResultsCount = action.payload.info.count;
+      state.error = '';
+      state.data.results = action.payload.results;
+      state.data.pagesCount = action.payload.info.pages;
     },
 
     getDataFailure: (state, action: PayloadAction<Error>) => {
       state.isLoading = false;
+      state.data.totalResultsCount = 0;
       state.error = action.payload.message;
-      state.data = [];
-      state.pagination.pagesCount = 0;
+      state.data.results = [];
+      state.data.pagesCount = 0;
       state.filters.page = 1;
     },
   },

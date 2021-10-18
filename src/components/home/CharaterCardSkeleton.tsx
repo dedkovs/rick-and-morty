@@ -10,12 +10,12 @@ const cardStyle = {
   borderRadius: 2,
   boxShadow: '0 5px 10px rgba(0,0,0,0.2)',
   zIndex: 1,
-  height: { xs: 160, sm: 182 },
+  height: { xs: 160, sm: 200 },
 } as const;
 
 const cardContentStyle = {
   display: 'flex',
-  ':last-child': { paddingBottom: { xs: 1.5, sm: 2.5 } },
+  ':last-child': { paddingBottom: { xs: 1.5, sm: 2 } },
   padding: { xs: 1, sm: 1.5 },
   height: '100%',
 } as const;
@@ -24,14 +24,14 @@ const characterCardImageStyle = {
   width: { xs: 100, sm: 150 },
   height: { xs: 100, sm: 150 },
   borderRadius: 1,
-  marginRight: 1.5,
 } as const;
 
-const containerForPositioningLearnMoreButtonToBottom = {
+const textWithButtonContainer = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
   flexGrow: 1,
+  marginLeft: 1.5,
 } as const;
 
 const titleStyle = {
@@ -67,14 +67,14 @@ const CharacterCardSkeleton: FC = () => {
           animation="wave"
           variant="rectangular"
         />
-        <Box sx={containerForPositioningLearnMoreButtonToBottom}>
+        <Box sx={textWithButtonContainer}>
           <Box>
             <Skeleton animation="wave" sx={titleStyle} />
             <Skeleton animation="wave" sx={infoStyle} width="80%" />
             <Skeleton animation="wave" sx={infoStyle} width="60%" />
             <Skeleton animation="wave" sx={infoStyle} width="50%" />
           </Box>
-          <Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Skeleton animation="wave" sx={buttonStyle} />
           </Box>
         </Box>

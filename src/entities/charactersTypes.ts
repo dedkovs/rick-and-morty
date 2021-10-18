@@ -8,20 +8,25 @@ export interface Character {
   name: string;
   origin: CharacterOrigin;
   species: string;
-  status: CharacterStatuses;
+  status: CharacterStatus;
   type: string;
   url: string;
 }
 
 export interface Filters {
   name: string;
-  status: CharacterStatuses;
+  type: string;
+  species: CharacterSpecies;
+  gender: CharacterGender;
+  status: CharacterStatus;
   page: number;
 }
 
-export interface Pagination {
-  pagesCount: number;
-}
+type AddOptional<T> = {
+  [P in keyof T]?: T[P];
+};
+
+export type FiltersPayload = AddOptional<Filters> | undefined;
 
 export interface ApiResponse {
   info: CharacterInfo;
@@ -30,21 +35,14 @@ export interface ApiResponse {
 
 export interface CharactersState {
   filters: Filters;
-  pagination: Pagination;
-  data: Character[];
+  data: {
+    totalResultsCount: number;
+    results: Character[];
+    pagesCount: number;
+  };
   isLoading: boolean;
-  error: string | null;
+  error: string;
 }
-
-export interface GetDataTriggerPayload {
-  page?: number;
-  name?: string;
-  status?: CharacterStatuses;
-}
-
-export type GetDataTriggerPayloadOrUndefined =  // results?
-  | GetDataTriggerPayload
-  | undefined;
 
 export interface CharacterLocation {
   name: string;
@@ -63,9 +61,32 @@ export interface CharacterInfo {
   prev: string | null;
 }
 
-export enum CharacterStatuses {
+export enum CharacterStatus {
   All = '',
   Alive = 'Alive',
   Dead = 'Dead',
   Unknown = 'unknown',
+}
+
+export enum CharacterSpecies {
+  All = '',
+  Alien = 'Alien',
+  Animal = 'Animal',
+  Cronenberg = 'Cronenberg',
+  Disease = 'Disease',
+  Human = 'Human',
+  Humanoid = 'Humanoid',
+  'Mythological Creature' = 'Mythological Creature',
+  Planet = 'Planet',
+  Poopybutthole = 'Poopybutthole',
+  Robot = 'Robot',
+  Unknown = 'unknown',
+}
+
+export enum CharacterGender {
+  All = '',
+  Male = 'Male',
+  Female = 'Female',
+  Genderless = 'Genderless',
+  Unknown = 'Unknown',
 }

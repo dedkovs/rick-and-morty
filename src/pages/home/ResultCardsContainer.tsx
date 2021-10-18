@@ -10,18 +10,17 @@ const characterCardsContainerStyle = {
   flexWrap: 'wrap',
   justifyContent: 'center',
   gap: 4,
-  marginTop: 5,
 } as const;
 
 const CharacterCardsContainer: FC = () => {
-  const data = useAppSelector((state) => state.characters.data);
+  const results = useAppSelector((state) => state.characters.data.results);
   const isLoading = useAppSelector((state) => state.characters.isLoading);
 
   return isLoading ? (
     <CharacterCardSkeletonsContainer />
   ) : (
     <Box sx={characterCardsContainerStyle}>
-      {data.map((character: Character) => (
+      {results.map((character: Character) => (
         <CharacterCard key={character.id} {...character} />
       ))}
     </Box>

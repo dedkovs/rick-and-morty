@@ -6,7 +6,7 @@ import {
 } from '../slices/charactersSlice';
 import { fetchApi } from '../../pages/home/api';
 import { ApiResponse } from '../../entities/charactersTypes';
-import { getQueryUrl } from '../../helpers/getQueryUrl';
+import { getSearchParams } from '../../helpers/getSearchParams';
 
 function* getDataAsync(): Generator {
   const filters = yield select((state) => state.characters.filters);
@@ -14,7 +14,7 @@ function* getDataAsync(): Generator {
   try {
     const apiResponse = yield call(
       fetchApi,
-      getQueryUrl(filters as URLSearchParams)
+      getSearchParams(filters as URLSearchParams)
     );
     yield put(getDataSuccess(apiResponse as ApiResponse));
   } catch (err) {

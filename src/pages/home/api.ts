@@ -1,19 +1,8 @@
-import axios, { AxiosError } from 'axios';
+import { mainApi } from '../../api';
 
-type ServerError = { error: string };
+const API_RESOURCE = '/character';
 
-export const fetchApi = async (queryUrl: string) => {
-  try {
-    const response = await axios.get(queryUrl);
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      const serverError = err as AxiosError<ServerError>;
-      if (serverError && serverError.response) {
-        throw Error(serverError.response.data.error);
-      }
-    }
-  }
+export const fetchApi = async (searchParams: string) => {
+  const path = API_RESOURCE + '/?' + searchParams;
+  return await mainApi(path);
 };

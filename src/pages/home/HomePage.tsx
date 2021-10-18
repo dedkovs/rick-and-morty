@@ -2,13 +2,13 @@ import { FC } from 'react';
 import CharacterFiltersContainer from './CharacterFiltersContainer';
 import ResultCardsContainer from './ResultCardsContainer';
 import PaginationContainer from './PaginationContainer';
-import ErrorMessage from '../../components/home/ErrorMessage';
+import ResultsCountContainer from './ResultsCountContainer';
 
 const HomePage: FC = () => {
   return (
     <>
       <CharacterFiltersContainer />
-      <ErrorMessage />
+      <ResultsCountContainer />
       <ResultCardsContainer />
       <PaginationContainer />
     </>

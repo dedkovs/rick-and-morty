@@ -4,18 +4,18 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import { Character, CharacterStatuses } from '../../entities/charactersTypes';
+import { Character, CharacterStatus } from '../../entities/charactersTypes';
 import Skeleton from '@mui/material/Skeleton';
 
 type CharacterStatusAndColor = {
-  [key in CharacterStatuses]: string;
+  [key in CharacterStatus]: string;
 };
 
 const characterStatusAndColor: CharacterStatusAndColor = {
-  [CharacterStatuses.All]: 'initial',
-  [CharacterStatuses.Alive]: 'LimeGreen',
-  [CharacterStatuses.Dead]: 'OrangeRed',
-  [CharacterStatuses.Unknown]: 'rgba(0,0,0,0.5)',
+  [CharacterStatus.All]: 'initial',
+  [CharacterStatus.Alive]: 'LimeGreen',
+  [CharacterStatus.Dead]: 'OrangeRed',
+  [CharacterStatus.Unknown]: 'rgba(0,0,0,0.5)',
 };
 
 const cardStyle = {
@@ -28,7 +28,7 @@ const cardStyle = {
 const cardContentStyle = {
   display: 'flex',
   padding: { xs: 1, sm: 1.5 },
-  ':last-child': { paddingBottom: { xs: 1, sm: 2 } },
+  ':last-child': { paddingBottom: 1 },
   height: '100%',
 } as const;
 
@@ -38,11 +38,21 @@ const characterNameStyle = {
   wordBreak: 'break-word',
 } as const;
 
+const characterSpeciesStyle = {
+  display: 'inline',
+  textTransform: 'capitalize',
+} as const;
+
+const characterGenderStyle = {
+  display: 'inline',
+  textTransform: 'capitalize',
+} as const;
+
 const characterCardImageStyle = {
   width: { xs: 100, sm: 150 },
   height: 'fit-content',
   borderRadius: 1,
-  marginRight: 1.5,
+  marginRight: 0,
   marginBottom: 1,
   position: 'relative',
 } as const;
@@ -61,20 +71,22 @@ const greyText = {
   color: 'rgba(0,0,0,0.5)',
 } as const;
 
+const textWithButtonContainer = {
+  display: 'flex',
+  flexGrow: 1,
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  marginLeft: 1.5,
+} as const;
+
 const cardActionsStyle = {
   padding: 0,
   marginTop: 2,
-} as const;
-
-const textWithButtonContainer = {
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
+  justifyContent: 'flex-end',
 } as const;
 
 const learnMoreButtonStyle = {
-  padding: 0,
-  ':hover': { backgroundColor: 'transparent' },
+  padding: 1,
 } as const;
 
 const CharacterCard: FC<Character> = (props) => {
@@ -117,11 +129,11 @@ const CharacterCard: FC<Character> = (props) => {
             <Box sx={{ typography: 'body2' }}>
               <Box>
                 <Box sx={greyText}>species: </Box>
-                {species}
+                <Box sx={characterSpeciesStyle}>{species}</Box>
               </Box>
               <Box>
                 <Box sx={greyText}>gender: </Box>
-                {gender}
+                <Box sx={characterGenderStyle}>{gender}</Box>
               </Box>
               <Box>
                 <Box sx={greyText}>status: </Box>

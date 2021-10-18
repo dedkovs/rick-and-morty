@@ -3,11 +3,10 @@ import CharacterCardSkeleton from '../../components/home/CharaterCardSkeleton';
 import Box from '@mui/material/Box';
 
 const characterCardSkeletonsContainerStyle = {
-  marginTop: 3,
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  gap: '32px',
+  gap: 4,
 } as const;
 
 const CharacterCardSkeletonsContainer: FC = () => {

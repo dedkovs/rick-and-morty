@@ -17,7 +17,13 @@ const PaginationContainer: FC = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const data = useAppSelector((state) => state.characters.data);
+  const totalResultsCount = useAppSelector(
+    (state) => state.characters.data.totalResultsCount
+  );
+
+  const pagesCount = useAppSelector(
+    (state) => state.characters.data.pagesCount
+  );
 
   const currentPage = useAppSelector((state) => state.characters.filters.page);
 
@@ -34,10 +40,14 @@ const PaginationContainer: FC = () => {
     }
   };
 
-  return data.length > 0 ? ( //
-    // if data.length === 0 ...
+  return totalResultsCount > 0 ? (
     <Box sx={PaginationContainerStyle}>
-      <Pagination handleChange={handleChange} siblingCount={matches ? 1 : 0} />
+      <Pagination
+        handleChange={handleChange}
+        pagesCount={pagesCount}
+        page={currentPage}
+        siblingCount={matches ? 1 : 0}
+      />
     </Box>
   ) : null;
 };

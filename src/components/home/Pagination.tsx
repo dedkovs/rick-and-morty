@@ -1,21 +1,16 @@
 import { FC, ChangeEvent } from 'react';
 import MuiPagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
-import { useAppSelector } from '../../redux/hooks';
 
 interface PaginationProps {
   handleChange: (e: ChangeEvent<unknown>, page: number) => void;
+  pagesCount: number;
+  page: number;
   siblingCount: number;
 }
 
 const Pagination: FC<PaginationProps> = (props) => {
-  const { handleChange, siblingCount } = props;
-
-  const pagesCount = useAppSelector(
-    (state) => state.characters.pagination.pagesCount
-  );
-
-  const page = useAppSelector((state) => state.characters.filters.page);
+  const { handleChange, pagesCount, page, siblingCount } = props;
 
   return (
     <MuiPagination
