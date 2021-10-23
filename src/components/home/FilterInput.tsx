@@ -1,10 +1,11 @@
-import { FC, ChangeEvent } from 'react';
+import { FC, ChangeEvent, useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 interface FilterInputProps {
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   label: string;
+  value: string;
 }
 
 const inputStyle = {
@@ -12,7 +13,12 @@ const inputStyle = {
 } as const;
 
 const FilterInput: FC<FilterInputProps> = (props) => {
-  const { onChange, label } = props;
+  const { onChange, label, value } = props;
+  const [inputValue, setInputValue] = useState(value);
+
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
 
   return (
     <Box component="form" sx={inputStyle} noValidate autoComplete="off">
@@ -21,7 +27,11 @@ const FilterInput: FC<FilterInputProps> = (props) => {
         id={label}
         label={label}
         variant={'standard'}
-        onChange={onChange}
+        onChange={(e) => {
+          setInputValue(e.target.value);
+          onChange(e);
+        }}
+        value={inputValue}
       />
     </Box>
   );

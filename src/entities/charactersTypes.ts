@@ -44,6 +44,12 @@ export interface CharactersState {
   error: string;
 }
 
+export interface CharacterDetailsState {
+  result: Character;
+  isLoading: boolean;
+  error: string;
+}
+
 export interface CharacterLocation {
   name: string;
   url: string;
@@ -90,3 +96,31 @@ export enum CharacterGender {
   Genderless = 'Genderless',
   Unknown = 'Unknown',
 }
+
+export interface UiState {
+  scrollY: number;
+}
+
+export interface Location {
+  created: string;
+  dimension: string;
+  id?: number;
+  name: string;
+  residents: string[];
+  type: string;
+  url: string;
+}
+
+export interface LocationDetailsState {
+  result: Location;
+  isLoading: boolean;
+  error: string;
+}
+
+export interface LocationResidentsState {
+  results: Character[];
+  isLoading: boolean;
+  error: string;
+}
+
+export type ResidentsApiResponse = Character[];

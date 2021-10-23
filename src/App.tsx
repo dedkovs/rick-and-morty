@@ -1,8 +1,9 @@
 import { FC, useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import HomePage from './pages/home/HomePage';
-import { getDataTrigger } from './redux/slices/charactersSlice';
-import { useAppDispatch } from './redux/hooks';
 import Box from '@mui/material/Box';
+import CharacterDetailsPage from './pages/characterDetails/CharacterDetailsPage';
+import LocationDetailsPage from './pages/locationDetails/LocationDetailsPage';
 
 const appStyle = {
   display: 'block',
@@ -12,19 +13,26 @@ const appStyle = {
 } as const;
 
 const App: FC = () => {
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     const loading = document.getElementById('loading');
     if (loading) {
       loading.parentNode?.removeChild(loading);
     }
-    dispatch(getDataTrigger());
-  }, [dispatch]);
+  }, []);
 
   return (
     <Box sx={appStyle}>
-      <HomePage />
+      <Switch>
+        <Route exact path="/character/:id">
+          <CharacterDetailsPage />
+        </Route>
+        <Route exact path="/location/:id">
+          <LocationDetailsPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
     </Box>
   );
 };

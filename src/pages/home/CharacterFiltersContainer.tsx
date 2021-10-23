@@ -20,7 +20,7 @@ const characterFiltersContainerStyle = {
 } as const;
 
 const debounce = (
-  func: (e: ChangeEvent<HTMLInputElement>) => void,
+  func: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
   timeout = 500
 ) => {
   let timer: NodeJS.Timeout;
@@ -96,10 +96,12 @@ const CharacterFiltersContainer: FC = () => {
       <FilterInput
         onChange={handleCharacterNameChange}
         label="Character name"
+        value={name}
       />
       <FilterInput
         onChange={handleCharacterTypeChange}
         label="Character type"
+        value={type}
       />
       <FilterSelect
         onChange={handleCharacterSpeciesChange}

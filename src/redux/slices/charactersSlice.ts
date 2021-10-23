@@ -31,10 +31,10 @@ export const characters = createSlice({
   initialState,
   reducers: {
     getDataTrigger: (state, action: PayloadAction<FiltersPayload>) => {
-      state.isLoading = true;
+      state.filters = { ...state.filters, ...action.payload };
       state.data.totalResultsCount = 0;
       state.error = '';
-      state.filters = { ...state.filters, page: 1, ...action.payload };
+      state.isLoading = true;
     },
 
     getDataSuccess: (state, action: PayloadAction<ApiResponse>) => {
@@ -53,10 +53,21 @@ export const characters = createSlice({
       state.data.pagesCount = 0;
       state.filters.page = 1;
     },
+
+    resetFilters: (state) => {
+      state.filters = {
+        name: '',
+        type: '',
+        species: CharacterSpecies.All,
+        gender: CharacterGender.All,
+        status: CharacterStatus.All,
+        page: 1,
+      };
+    },
   },
 });
 
-export const { getDataTrigger, getDataSuccess, getDataFailure } =
+export const { getDataTrigger, getDataSuccess, getDataFailure, resetFilters } =
   characters.actions;
 
 export default characters.reducer;

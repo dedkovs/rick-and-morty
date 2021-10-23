@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react';
+import { FC, ChangeEvent, useState } from 'react';
 import MuiPagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 
@@ -11,10 +11,14 @@ interface PaginationProps {
 
 const Pagination: FC<PaginationProps> = (props) => {
   const { handleChange, pagesCount, page, siblingCount } = props;
+  const [_page, setPage] = useState(page);
 
   return (
     <MuiPagination
-      onChange={handleChange}
+      onChange={(e, pageNumber) => {
+        setPage(pageNumber);
+        handleChange(e, pageNumber);
+      }}
       count={pagesCount}
       renderItem={(item) => {
         return (
@@ -29,7 +33,7 @@ const Pagination: FC<PaginationProps> = (props) => {
         );
       }}
       siblingCount={siblingCount}
-      page={page}
+      page={_page}
     />
   );
 };

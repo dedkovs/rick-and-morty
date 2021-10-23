@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -6,6 +7,9 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { Character, CharacterStatus } from '../../entities/charactersTypes';
 import Skeleton from '@mui/material/Skeleton';
+import { setIsLoading } from '../../redux/slices/characterDetailsSlice';
+import { useAppDispatch } from '../../redux/hooks';
+import { setScrollY } from '../../redux/slices/uiSlice';
 
 type CharacterStatusAndColor = {
   [key in CharacterStatus]: string;
@@ -83,16 +87,22 @@ const cardActionsStyle = {
   padding: 0,
   marginTop: 2,
   justifyContent: 'flex-end',
+  '& a': {
+    textDecoration: 'none',
+  },
 } as const;
 
 const learnMoreButtonStyle = {
   padding: 1,
+  textDecoration: 'none',
 } as const;
 
 const CharacterCard: FC<Character> = (props) => {
+  const dispatch = useAppDispatch();
+
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const { gender, image, name, species, status, type } = props;
+  const { id, gender, image, name, species, status, type } = props;
 
   const characterStatusStyle = {
     display: 'inline',
@@ -142,9 +152,18 @@ const CharacterCard: FC<Character> = (props) => {
             </Box>
           </Box>
           <CardActions sx={cardActionsStyle}>
-            <Button sx={learnMoreButtonStyle} size="small">
-              Learn More
-            </Button>
+            <Link to={`/character/${id}`}>
+              <Button
+                sx={learnMoreButtonStyle}
+                size="small"
+                onClick={() => {
+                  dispatch(setScrollY(Math.round(window.scrollY)));
+                  dispatch(setIsLoading(true));
+                }}
+              >
+                Learn More
+              </Button>
+            </Link>
           </CardActions>
         </Box>
       </CardContent>
