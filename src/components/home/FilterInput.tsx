@@ -14,10 +14,10 @@ const inputStyle = {
 
 const FilterInput: FC<FilterInputProps> = (props) => {
   const { onChange, label, value } = props;
-  const [inputValue, setInputValue] = useState(value);
+  const [inputState, setInputState] = useState(value);
 
   useEffect(() => {
-    setInputValue(value);
+    setInputState(value);
   }, [value]);
 
   return (
@@ -28,10 +28,10 @@ const FilterInput: FC<FilterInputProps> = (props) => {
         label={label}
         variant={'standard'}
         onChange={(e) => {
-          setInputValue(e.target.value);
+          setInputState(e.target.value);
           onChange(e);
         }}
-        value={inputValue}
+        value={inputState}
       />
     </Box>
   );

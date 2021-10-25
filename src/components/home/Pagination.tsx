@@ -11,12 +11,12 @@ interface PaginationProps {
 
 const Pagination: FC<PaginationProps> = (props) => {
   const { handleChange, pagesCount, page, siblingCount } = props;
-  const [_page, setPage] = useState(page);
+  const [pageState, setPageState] = useState(page);
 
   return (
     <MuiPagination
       onChange={(e, pageNumber) => {
-        setPage(pageNumber);
+        setPageState(pageNumber);
         handleChange(e, pageNumber);
       }}
       count={pagesCount}
@@ -29,11 +29,15 @@ const Pagination: FC<PaginationProps> = (props) => {
                 ? { pointerEvents: 'none' }
                 : null
             }
+            disabled={
+              (item.type === 'previous' && page === 1) ||
+              (item.type === 'next' && page === pagesCount)
+            }
           />
         );
       }}
       siblingCount={siblingCount}
-      page={_page}
+      page={pageState}
     />
   );
 };

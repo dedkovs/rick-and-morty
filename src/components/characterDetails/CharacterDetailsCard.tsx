@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Character, CharacterStatus } from '../../entities/charactersTypes';
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import Skeleton from '@mui/material/Skeleton';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
-import { setIsLoading } from '../../redux/slices/locationDetailsSlice';
+import { setSelectedCharacterId } from '../../redux/slices/charactersSlice';
 
 interface CharacterDetailsCardProps {
   result: Character;
@@ -59,19 +59,18 @@ const characterDetailStyle = {
 } as const;
 
 const characterCardImageStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
   width: { xs: '100%', sm: 300 },
   borderRadius: 1,
   marginRight: 0,
   marginBottom: 0,
-  position: 'relative',
 } as const;
 
 const imageSkeletonStyle = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: { xs: 100, sm: 150 },
-  height: { xs: 100, sm: 150 },
+  width: 300,
+  height: 300,
   borderRadius: 1,
 } as const;
 
@@ -119,7 +118,7 @@ const CharacterDetailsCard: FC<CharacterDetailsCardProps> = ({ result }) => {
     created,
     // episode,
     gender,
-    // id,
+    id,
     image,
     location,
     name,
@@ -142,6 +141,10 @@ const CharacterDetailsCard: FC<CharacterDetailsCardProps> = ({ result }) => {
     textTransform: 'capitalize',
   } as const;
 
+  useEffect(() => {
+    dispatch(setSelectedCharacterId(id));
+  }, [dispatch, id]);
+
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', minWidth: 320 }}>
       <Card sx={cardStyle} elevation={0}>
@@ -149,24 +152,25 @@ const CharacterDetailsCard: FC<CharacterDetailsCardProps> = ({ result }) => {
           <Box
             sx={{
               position: 'relative',
-              width: { xs: '100%', sm: 'max-content' },
               maxWidth: 340,
             }}
           >
-            {imageLoaded ? null : (
-              <Skeleton
-                sx={imageSkeletonStyle}
-                animation="wave"
-                variant="rectangular"
+            <Box sx={{ width: 300, height: 300 }}>
+              {imageLoaded ? null : (
+                <Skeleton
+                  sx={imageSkeletonStyle}
+                  animation="wave"
+                  variant="rectangular"
+                />
+              )}
+              <Box
+                component="img"
+                sx={characterCardImageStyle}
+                alt={name}
+                src={image}
+                onLoad={() => setImageLoaded(true)}
               />
-            )}
-            <Box
-              component="img"
-              sx={characterCardImageStyle}
-              alt={name}
-              src={image}
-              onLoad={() => setImageLoaded(true)}
-            />
+            </Box>
           </Box>
 
           <Box sx={textWithButtonContainer}>
@@ -203,12 +207,7 @@ const CharacterDetailsCard: FC<CharacterDetailsCardProps> = ({ result }) => {
                         : { '& a': { color: 'rgba(0,0,0,1)' } }
                     }
                   >
-                    <Link
-                      to={`/location/${origin.url.slice(41)}`}
-                      onClick={() => {
-                        dispatch(setIsLoading(true));
-                      }}
-                    >
+                    <Link to={`/location/${origin.url.slice(41)}`}>
                       <Box sx={characterDetailStyle}>{origin.name}</Box>
                     </Link>
                   </Box>
@@ -228,12 +227,7 @@ const CharacterDetailsCard: FC<CharacterDetailsCardProps> = ({ result }) => {
                         : { '& a': { color: 'rgba(0,0,0,1)' } }
                     }
                   >
-                    <Link
-                      to={`/location/${location.url.slice(41)}`}
-                      onClick={() => {
-                        dispatch(setIsLoading(true));
-                      }}
-                    >
+                    <Link to={`/location/${location.url.slice(41)}`}>
                       <Box sx={characterDetailStyle}>{location.name}</Box>
                     </Link>
                   </Box>

@@ -1,23 +1,34 @@
 import { FC } from 'react';
 import Typography from '@mui/material/Typography';
-import { useAppSelector } from '../../redux/hooks';
+
+interface ResultsCountProps {
+  residentsCount?: number;
+}
 
 const resultsCountStyle = {
   fontStyle: 'italic',
   color: 'rgba(0,0,0,0.5)',
-  marginTop: 2,
+  marginTop: 4,
 } as const;
 
-const ResultsCount: FC = () => {
-  const residentsCount = useAppSelector(
-    (state) => state.locationResidents.results
-  );
+const ResultsCount: FC<ResultsCountProps> = ({ residentsCount }) => {
+  let text: string = '';
 
-  return (
-    <Typography sx={resultsCountStyle} textAlign="center">
-      {residentsCount.length} residents of this location:
-    </Typography>
-  );
+  if (typeof residentsCount === 'undefined') return null;
+  else {
+    if (residentsCount === 0) text = 'The only resident of this location.';
+
+    if (residentsCount === 1) text = 'and 1 more resident of this location:';
+
+    if (residentsCount > 1)
+      text = `and ${residentsCount} more residents of this location:`;
+
+    return (
+      <Typography sx={resultsCountStyle} textAlign="center">
+        {text}
+      </Typography>
+    );
+  }
 };
 
 export default ResultsCount;

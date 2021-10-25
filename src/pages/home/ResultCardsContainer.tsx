@@ -2,8 +2,9 @@ import { FC } from 'react';
 import Box from '@mui/material/Box';
 import CharacterCard from '../../components/home/CharacterCard';
 import { useAppSelector } from '../../redux/hooks';
-import { Character } from '../../entities/charactersTypes';
+import { ApiResponse, Character } from '../../entities/charactersTypes';
 import CharacterCardSkeletonsContainer from './CharacterCardSkeletonsContainer';
+import { useFilters } from '../../hooks/useFilters';
 
 const characterCardsContainerStyle = {
   display: 'flex',
@@ -13,14 +14,17 @@ const characterCardsContainerStyle = {
 } as const;
 
 const CharacterCardsContainer: FC = () => {
-  const results = useAppSelector((state) => state.characters.data.results);
-  const isLoading = useAppSelector((state) => state.characters.isLoading);
+  const filters = useAppSelector((state) => state.characters.filters);
 
-  return isLoading ? (
-    <CharacterCardSkeletonsContainer />
-  ) : (
+  const response = useFilters(filters);
+
+  if (response.status === 'loading') return <CharacterCardSkeletonsContainer />;
+
+  if (response.status === 'error') return null;
+
+  return (
     <Box sx={characterCardsContainerStyle}>
-      {results.map((character: Character) => (
+      {(response.data as ApiResponse).results.map((character: Character) => (
         <CharacterCard key={character.id} {...character} />
       ))}
     </Box>

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Box from '@mui/material/Box';
 import ResultsCount from '../../components/home/ResultsCount';
 import { useAppSelector } from '../../redux/hooks';
+import { useFilters } from '../../hooks/useFilters';
 
 const resultsCountContainerStyle = {
   height: 80,
@@ -10,27 +11,31 @@ const resultsCountContainerStyle = {
   alignItems: 'center',
 } as const;
 
-const ResultsCountContainer: FC = () => {
-  const isLoading = useAppSelector((state) => state.characters.isLoading);
+interface ResultsCountContainerProps {
+  text?: string;
+}
 
-  const totalResultsCount = useAppSelector(
-    (state) => state.characters.data.totalResultsCount
-  );
+const ResultsCountContainer: FC<ResultsCountContainerProps> = () => {
+  const filters = useAppSelector((state) => state.characters.filters);
+  const response = useFilters(filters);
 
-  const error = useAppSelector((state) => state.characters.error);
+  let text = '';
 
-  let text: string = '';
-
-  if (isLoading) {
+  if (response.status === 'loading') {
     text = 'Searching...';
   }
 
-  if (totalResultsCount !== 0) {
-    text = `Found ${totalResultsCount} items`;
+  if (response.status === 'error') {
+    text = 'Nothing found';
   }
 
-  if (error) {
-    text = error;
+  if (response.status === 'success') {
+    const charactersCount = response.data?.info.count;
+    if (charactersCount === 1) {
+      text = 'Found 1 character';
+    } else {
+      text = `Found ${response.data?.info.count} characters`;
+    }
   }
 
   return (

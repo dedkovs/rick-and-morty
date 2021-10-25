@@ -7,9 +7,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import { Character, CharacterStatus } from '../../entities/charactersTypes';
 import Skeleton from '@mui/material/Skeleton';
-import { setIsLoading } from '../../redux/slices/characterDetailsSlice';
 import { useAppDispatch } from '../../redux/hooks';
-import { setScrollY } from '../../redux/slices/uiSlice';
+import { setSelectedCharacterId } from '../../redux/slices/charactersSlice';
 
 type CharacterStatusAndColor = {
   [key in CharacterStatus]: string;
@@ -157,8 +156,7 @@ const CharacterCard: FC<Character> = (props) => {
                 sx={learnMoreButtonStyle}
                 size="small"
                 onClick={() => {
-                  dispatch(setScrollY(Math.round(window.scrollY)));
-                  dispatch(setIsLoading(true));
+                  dispatch(setSelectedCharacterId(id));
                 }}
               >
                 Learn More

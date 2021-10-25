@@ -1,8 +1,13 @@
 import { FC } from 'react';
 import Box from '@mui/material/Box';
 import CharacterCard from '../../components/home/CharacterCard';
-import { useAppSelector } from '../../redux/hooks';
 import { Character } from '../../entities/charactersTypes';
+import Spinner from '../../components/common/Spinner';
+import { useLocationResidents } from '../../hooks/useLocationResidents';
+
+interface ResidentsCardsContainerProps {
+  residentsIdsString: string;
+}
 
 const residentsCardsContainerStyle = {
   display: 'flex',
@@ -12,24 +17,23 @@ const residentsCardsContainerStyle = {
   marginTop: 4,
 } as const;
 
-const ResidentsCardsContainer: FC = () => {
-  const results = useAppSelector((state) => state.locationResidents.results);
-  const isLoading = useAppSelector(
-    (state) => state.locationResidents.isLoading
-  );
+const ResidentsCardsContainer: FC<ResidentsCardsContainerProps> = ({
+  residentsIdsString,
+}) => {
+  const response = useLocationResidents(residentsIdsString);
 
-  let resultsArray: Character[] = [];
-  if (!Array.isArray(results)) {
-    resultsArray.push(results);
-  } else resultsArray = results;
+  if (response.status === 'loading') return <Spinner />;
 
-  return isLoading ? (
-    <Box
-      sx={{ display: 'flex', justifyContent: 'center', fontStyle: 'italic' }}
-    >
-      Loading...
-    </Box>
-  ) : (
+  if (response.status === 'error') return <div>Something went wrong</div>;
+
+  const residents = response.data || [];
+
+  let resultsArray: Character[] | Character = [];
+  if (!Array.isArray(residents)) {
+    resultsArray.push(residents);
+  } else resultsArray = residents;
+
+  return (
     <Box sx={residentsCardsContainerStyle}>
       {resultsArray.map((character: Character) => (
         <CharacterCard key={character.id} {...character} />

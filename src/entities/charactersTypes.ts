@@ -35,13 +35,7 @@ export interface ApiResponse {
 
 export interface CharactersState {
   filters: Filters;
-  data: {
-    totalResultsCount: number;
-    results: Character[];
-    pagesCount: number;
-  };
-  isLoading: boolean;
-  error: string;
+  selectedCharacterId: number | null;
 }
 
 export interface CharacterDetailsState {

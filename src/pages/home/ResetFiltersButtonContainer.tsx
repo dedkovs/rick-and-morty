@@ -2,10 +2,7 @@ import ResetFiltersButton from '../../components/home/ResetFiltersButton';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAppDispatch } from '../../redux/hooks';
-import {
-  resetFilters,
-  getDataTrigger,
-} from '../../redux/slices/charactersSlice';
+import { resetFilters } from '../../redux/slices/charactersSlice';
 
 const theme = createTheme({
   palette: {
@@ -20,7 +17,6 @@ const ResetFiltersButtonContainer = () => {
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
-    dispatch(getDataTrigger());
   };
 
   return (

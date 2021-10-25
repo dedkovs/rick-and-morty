@@ -3,7 +3,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import FilterInput from '../../components/home/FilterInput';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { getDataTrigger } from '../../redux/slices/charactersSlice';
+import { setFilters } from '../../redux/slices/charactersSlice';
 import FilterSelect from '../../components/home/FilterSelect';
 import {
   CharacterSpecies,
@@ -49,7 +49,8 @@ const CharacterFiltersContainer: FC = () => {
     const trimmedName = e.target.value.trim().toLowerCase();
     if (name !== trimmedName) {
       dispatch(
-        getDataTrigger({
+        setFilters({
+          page: 1,
           name: trimmedName,
         })
       );
@@ -60,7 +61,8 @@ const CharacterFiltersContainer: FC = () => {
     const trimmedType = e.target.value.trim().toLowerCase();
     if (type !== trimmedType) {
       dispatch(
-        getDataTrigger({
+        setFilters({
+          page: 1,
           type: trimmedType,
         })
       );
@@ -69,7 +71,8 @@ const CharacterFiltersContainer: FC = () => {
 
   const handleCharacterSpeciesChange = (e: SelectChangeEvent) => {
     dispatch(
-      getDataTrigger({
+      setFilters({
+        page: 1,
         species: e.target.value as CharacterSpecies,
       })
     );
@@ -77,7 +80,8 @@ const CharacterFiltersContainer: FC = () => {
 
   const handleCharacterGenderChange = (e: SelectChangeEvent) => {
     dispatch(
-      getDataTrigger({
+      setFilters({
+        page: 1,
         gender: e.target.value as CharacterGender,
       })
     );
@@ -85,7 +89,8 @@ const CharacterFiltersContainer: FC = () => {
 
   const handleCharacterStatusChange = (e: SelectChangeEvent) => {
     dispatch(
-      getDataTrigger({
+      setFilters({
+        page: 1,
         status: e.target.value as CharacterStatus,
       })
     );

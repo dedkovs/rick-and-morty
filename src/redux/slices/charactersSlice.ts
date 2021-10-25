@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   CharactersState,
-  ApiResponse,
   CharacterStatus,
   FiltersPayload,
   CharacterSpecies,
@@ -17,43 +16,13 @@ export const initialState: CharactersState = {
     status: CharacterStatus.All,
     page: 1,
   },
-  data: {
-    totalResultsCount: 0,
-    results: [],
-    pagesCount: 0,
-  },
-  isLoading: false,
-  error: '',
+  selectedCharacterId: null,
 };
 
 export const characters = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    getDataTrigger: (state, action: PayloadAction<FiltersPayload>) => {
-      state.filters = { ...state.filters, ...action.payload };
-      state.data.totalResultsCount = 0;
-      state.error = '';
-      state.isLoading = true;
-    },
-
-    getDataSuccess: (state, action: PayloadAction<ApiResponse>) => {
-      state.isLoading = false;
-      state.data.totalResultsCount = action.payload.info.count;
-      state.error = '';
-      state.data.results = action.payload.results;
-      state.data.pagesCount = action.payload.info.pages;
-    },
-
-    getDataFailure: (state, action: PayloadAction<Error>) => {
-      state.isLoading = false;
-      state.data.totalResultsCount = 0;
-      state.error = action.payload.message;
-      state.data.results = [];
-      state.data.pagesCount = 0;
-      state.filters.page = 1;
-    },
-
     resetFilters: (state) => {
       state.filters = {
         name: '',
@@ -64,10 +33,16 @@ export const characters = createSlice({
         page: 1,
       };
     },
+    setFilters: (state, action: PayloadAction<FiltersPayload>) => {
+      state.filters = { ...state.filters, ...action.payload };
+    },
+    setSelectedCharacterId: (state, action: PayloadAction<number>) => {
+      state.selectedCharacterId = action.payload;
+    },
   },
 });
 
-export const { getDataTrigger, getDataSuccess, getDataFailure, resetFilters } =
+export const { resetFilters, setFilters, setSelectedCharacterId } =
   characters.actions;
 
 export default characters.reducer;

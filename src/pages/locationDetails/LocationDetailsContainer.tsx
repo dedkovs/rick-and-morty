@@ -1,21 +1,18 @@
 import { FC } from 'react';
-import { useAppSelector } from '../../redux/hooks';
 import LocationDetailsCard from '../../components/locationDetails/LocationDetailsCard';
 import Box from '@mui/material/Box';
+import { Location } from '../../entities/charactersTypes';
 
-const LocationDetailsContainer: FC = () => {
-  const isLoading = useAppSelector((state) => state.locationDetails.isLoading);
-  const result = useAppSelector((state) => state.locationDetails.result);
+interface LocationDetailsContainerProps {
+  location: Location;
+}
 
-  return isLoading ? (
-    <Box
-      sx={{ display: 'flex', justifyContent: 'center', fontStyle: 'italic' }}
-    >
-      Loading...
-    </Box>
-  ) : (
+const LocationDetailsContainer: FC<LocationDetailsContainerProps> = ({
+  location,
+}) => {
+  return (
     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <LocationDetailsCard result={result} />
+      <LocationDetailsCard result={location} />
     </Box>
   );
 };
